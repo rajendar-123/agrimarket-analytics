@@ -1,5 +1,11 @@
 # 🌾 AgriMarket Analytics: AP & Telangana Mandis Dashboard
 
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
+![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?style=flat&logo=chartdotjs&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)
+
 An interactive, professional-grade agricultural market analysis dashboard tracking commodity prices, trading volumes, price volatility, and supply-demand correlation metrics for mandis (market yards) in **Andhra Pradesh** and **Telangana**, India.
 
 This project is built from scratch using vanilla frontend technologies (**HTML5**, **CSS3**, **ES6 JavaScript**, and **Chart.js**) with a premium dark glassmorphism aesthetic. It is designed to serve as a portfolio project showcasing data engineering, frontend layout skills, dynamic charting, and analytical modeling.
@@ -28,16 +34,18 @@ This project is built from scratch using vanilla frontend technologies (**HTML5*
 
 ## 🛠️ Tech Stack & Libraries
 
-*   **Core Structure**: HTML5 (Semantic elements)
-*   **Styling**: Vanilla CSS3 Custom Variables (HSL tailored dark/light palette, micro-animations, glassmorphic filters, custom scrollbars, and responsiveness)
-*   **Logic**: Vanilla ES6 JavaScript (IIFE modules, custom count-up animations, canvas sparklines, custom pagination, and sorting)
-*   **Charting Library**: [Chart.js (v4.4.4 via CDN)](https://www.chartjs.org/)
+| Technology | Purpose |
+|---|---|
+| **HTML5** | Semantic page structure, canvas elements, accessible controls |
+| **CSS3** | Custom design tokens, glassmorphism, dark/light theme, responsive grid |
+| **ES6 JavaScript** | State management, data aggregations, animations, CSV export |
+| **Chart.js v4.4.4** | Dual-axis charts, doughnuts, forecast line visualizations |
 
 ---
 
 ## 📂 Project Architecture
 
-```markdown
+```
 ├── index.html         # Main dashboard layout, filtering wrappers, and canvas targets
 ├── css/
 │   └── styles.css     # Forestry design tokens, root properties, layouts, and animations
@@ -94,3 +102,13 @@ This project demonstrates several advanced engineering capabilities key for deve
 *   **Performance Optimization**: Chart.js instances are safely destroyed before recreation to prevent browser canvas leaks.
 *   **Real-world Utility**: Functional CSV generation, paginated logs, and search indexing showcase experience building line-of-business tooling.
 *   **Visual Polish**: Curated dark forest variables, glowing borders, custom scrollbars, and fluid layout cards demonstrate attention to UX/UI details.
+
+---
+
+## 👨‍💻 Developer
+
+**Ambala Rajendar Goud**
+B.Tech Graduate | CMR Institute of Technology, Hyderabad (2026)
+📧 rajendarambala@gmail.com
+🔗 [LinkedIn](https://www.linkedin.com/in/rajendar-goud-ambala-538173334)
+🐙 [GitHub](https://github.com/rajendar-123)
