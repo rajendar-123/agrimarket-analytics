@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AgriMarket Analytics — Real-time price tracking, arrival trends, volatility analysis, and predictive pricing models for agricultural mandis in Andhra Pradesh and Telangana.">
+  <title>AgriMarket Analytics | AP & Telangana Agricultural Mandis</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <div class="dashboard-container">
+
+    <!-- ==================== HEADER ==================== -->
+    <header class="dashboard-header" id="dashboard-header">
+      <div class="header-left">
+        <div class="logo-icon">🌾</div>
+        <div class="header-title">
+          <h1>AgriMarket Analytics</h1>
+          <p id="current-date">Loading...</p>
+        </div>
+      </div>
+      
+      <div class="header-right">
+        <!-- State Filter -->
+        <select class="filter-select" id="state-filter" aria-label="State filter">
+          <option value="All">📍 All States (AP & TS)</option>
+          <option value="Andhra Pradesh">Andhra Pradesh</option>
+          <option value="Telangana">Telangana</option>
+        </select>
+
+        <!-- Mandi Filter -->
+        <select class="filter-select" id="mandi-filter" aria-label="Mandi filter">
+          <option value="All">🏛️ All Mandis</option>
+          <!-- Dynamically populated -->
+        </select>
+
+        <!-- Commodity Filter -->
+        <select class="filter-select" id="commodity-filter" aria-label="Commodity filter">
+          <option value="All">🌾 All Commodities</option>
+          <option value="Paddy">Paddy (Rice)</option>
+          <option value="Cotton">Cotton</option>
+          <option value="Chillies">Chillies (Red)</option>
+          <option value="Turmeric">Turmeric</option>
+          <option value="Maize">Maize (Corn)</option>
+          <option value="Groundnut">Groundnut</option>
+          <option value="Onions">Onions</option>
+        </select>
+
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">🌙</button>
+      </div>
+    </header>
+
+    <!-- ==================== KPI CARDS ==================== -->
+    <section class="kpi-grid" id="kpi-section" aria-label="Agricultural KPIs">
+
+      <!-- Avg Modal Price -->
+      <div class="kpi-card" id="kpi-price">
+        <div class="kpi-header">
+          <span class="kpi-label">Avg Modal Price</span>
+          <div class="kpi-icon price">💰</div>
+        </div>
+        <div class="kpi-value" id="kpi-price-value">₹0/Qtl</div>
+        <div class="kpi-footer">
+          <span class="kpi-change positive" id="kpi-price-change">↑ 0%</span>
+          <canvas class="kpi-sparkline" id="sparkline-price"></canvas>
+        </div>
+      </div>
+
+      <!-- Total Arrivals -->
+      <div class="kpi-card" id="kpi-arrivals">
+        <div class="kpi-header">
+          <span class="kpi-label">Total Arrivals</span>
+          <div class="kpi-icon arrivals">📦</div>
+        </div>
+        <div class="kpi-value" id="kpi-arrivals-value">0 MT</div>
+        <div class="kpi-footer">
+          <span class="kpi-change positive" id="kpi-arrivals-change">↑ 0%</span>
+          <canvas class="kpi-sparkline" id="sparkline-arrivals"></canvas>
+        </div>
+      </div>
+
+      <!-- Price Volatility Index -->
+      <div class="kpi-card" id="kpi-volatility">
+        <div class="kpi-header">
+          <span class="kpi-label">Price Volatility</span>
+          <div class="kpi-icon volatility">⚡</div>
+        </div>
+        <div class="kpi-value" id="kpi-volatility-value">0.0%</div>
+        <div class="kpi-footer">
+          <span class="kpi-change positive" id="kpi-volatility-status">Stable</span>
+          <canvas class="kpi-sparkline" id="sparkline-volatility"></canvas>
+        </div>
+      </div>
+
+      <!-- Top Mandi -->
+      <div class="kpi-card" id="kpi-mandi">
+        <div class="kpi-header">
+          <span class="kpi-label">Top Mandi (Volume)</span>
+          <div class="kpi-icon mandi">🏛️</div>
+        </div>
+        <div class="kpi-value" id="kpi-mandi-value">N/A</div>
+        <div class="kpi-footer">
+          <span class="kpi-subtext" id="kpi-mandi-vol">Volume: 0 MT</span>
+          <canvas class="kpi-sparkline" id="sparkline-mandi"></canvas>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================== CHARTS GRID ==================== -->
+    <section class="charts-grid" id="charts-section" aria-label="Agricultural Analytics Charts">
+
+      <!-- Price Trend & Forecast -->
+      <div class="chart-card" id="price-trend-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Price Trend & Forecast</div>
+            <div class="chart-subtitle">Monthly modal price (2025) vs. 3-Month predictive moving average</div>
+          </div>
+          <span class="chart-badge">Predictive Model</span>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="priceTrendChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Arrivals vs Price (Supply & Demand Dynamics) -->
+      <div class="chart-card" id="supply-demand-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Supply vs. Price Dynamics</div>
+            <div class="chart-subtitle">Monthly arrivals volume (MT) plotted against average modal price (₹/Qtl)</div>
+          </div>
+          <span class="chart-badge">Correlation View</span>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="arrivalsPriceChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Mandi Price Comparison -->
+      <div class="chart-card" id="mandi-comparison-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Mandi Price Spread</div>
+            <div class="chart-subtitle">Average modal price comparison across active agricultural markets</div>
+          </div>
+          <span class="chart-badge">Mandi Comparison</span>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="mandiCompareChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Crop Share Volume -->
+      <div class="chart-card" id="crop-share-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Commodity Arrival Share</div>
+            <div class="chart-subtitle">Volume distribution (Metric Tons) of traded agricultural produce</div>
+          </div>
+          <span class="chart-badge">Crop Share</span>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="cropShareChart"></canvas>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================== BOTTOM ROW: TABLE + INSIGHTS ==================== -->
+    <section class="bottom-grid" id="bottom-section">
+
+      <!-- Recent Market Transactions -->
+      <div class="table-card" id="mandi-table-card">
+        <div class="table-header-controls">
+          <div>
+            <div class="chart-title">Recent Mandi Market Reports</div>
+            <div class="chart-subtitle">Interactive logs of weekly arrivals and modal pricing logs</div>
+          </div>
+          <div class="table-actions">
+            <input type="text" id="table-search" placeholder="Search Mandi or Commodity..." aria-label="Search Table">
+            <button id="export-csv-btn" class="action-btn" title="Export current filtered data to CSV">📥 Export CSV</button>
+          </div>
+        </div>
+        
+        <div class="table-wrapper">
+          <table class="products-table" id="mandi-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th class="sortable-header" data-sort="date">Date <span class="sort-icon">⇅</span></th>
+                <th class="sortable-header" data-sort="mandi">Mandi <span class="sort-icon">⇅</span></th>
+                <th class="sortable-header" data-sort="state">State <span class="sort-icon">⇅</span></th>
+                <th class="sortable-header" data-sort="commodity">Commodity <span class="sort-icon">⇅</span></th>
+                <th class="sortable-header" data-sort="arrivals">Arrivals (MT) <span class="sort-icon">⇅</span></th>
+                <th class="sortable-header sorted" data-sort="modalPrice">Modal Price (₹/Qtl) <span class="sort-icon">⇅</span></th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="mandi-tbody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Table Pagination -->
+        <div class="table-pagination" id="table-pagination">
+          <span class="pagination-info" id="pagination-info">Showing 0-0 of 0 entries</span>
+          <div class="pagination-buttons">
+            <button id="pagination-prev" class="pagination-btn" disabled>&larr; Prev</button>
+            <button id="pagination-next" class="pagination-btn" disabled>Next &rarr;</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mandi Market Insights (Dynamic Bullet points) -->
+      <div class="radar-card" id="insights-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Market Analysis & Insights</div>
+            <div class="chart-subtitle">Automated contextual takeaways for selected market filters</div>
+          </div>
+          <span class="chart-badge warning">Live Insights</span>
+        </div>
+        <div class="insights-content" id="insights-container">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="dashboard-footer" id="dashboard-footer">
+      <p>AgriMarket Analytics Dashboard · Designed for Portfolios & Recruiters</p>
+      <p>Built with ❤️ using HTML5 · Vanilla CSS3 · Vanilla JS · Chart.js</p>
+      <p class="footer-links">
+        <a href="https://github.com" target="_blank">🔗 Project GitHub</a> &middot; 
+        <a href="https://linkedin.com" target="_blank">💼 LinkedIn Profile</a> &middot; 
+        <a href="https://agmarknet.gov.in" target="_blank">🏛️ Government Agmarknet Source</a>
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- Scripts (order matters) -->
+  <script src="js/data.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/kpi.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
